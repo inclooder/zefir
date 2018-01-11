@@ -6,5 +6,12 @@ project(
   default_options: ['cpp_std=c++17']
 )
 
+sources = [
+  'src/main.cpp',
+  'src/sql_cipher.cpp'
+]
+
+sqlcipher = dependency('sqlcipher')
+
 incdir = include_directories('inc')
-executable('zefir', 'src/main.cpp', include_directories: incdir)
+executable('zefir', sources, include_directories : incdir, dependencies : sqlcipher)
