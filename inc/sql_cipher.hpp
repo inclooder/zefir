@@ -7,7 +7,10 @@
 
 class SqlCipherException : public std::runtime_error {
   public:
-    SqlCipherException(const std::string & message) : std::runtime_error(message) { }
+    SqlCipherException(const std::string & message);
+    virtual const char * what() const noexcept override;
+  private:
+    std::string fullMessage;
 };
 
 class SqlCipher {

@@ -8,7 +8,8 @@ project(
 
 sources = [
   'src/main.cpp',
-  'src/sql_cipher.cpp'
+  'src/sql_cipher.cpp',
+  'src/sql_cipher_exception.cpp'
 ]
 
 sqlcipher = dependency('sqlcipher')
