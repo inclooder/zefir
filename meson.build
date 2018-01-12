@@ -15,4 +15,5 @@ sources = [
 sqlcipher = dependency('sqlcipher')
 
 incdir = include_directories('inc')
-executable('zefir', sources, include_directories : incdir, dependencies : sqlcipher)
+#add_global_arguments('-H', language : 'cpp')
+executable('zefir', sources, include_directories : incdir, dependencies : [sqlcipher])

@@ -1,9 +1,10 @@
 #ifndef SQL_CIPHER_H
 #define SQL_CIPHER_H
 
+#define SQLITE_HAS_CODEC
+#include <sqlite3.h>
 #include <string>
 #include <stdexcept>
-#include <sqlite3.h>
 
 class SqlCipherException : public std::runtime_error {
   public:
@@ -15,7 +16,7 @@ class SqlCipherException : public std::runtime_error {
 
 class SqlCipher {
   public:
-    SqlCipher(const std::string & dbPath);
+    SqlCipher(const std::string & dbPath, const std::string & key);
     ~SqlCipher();
   private:
     sqlite3 * dbHandle;
