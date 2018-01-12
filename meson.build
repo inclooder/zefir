@@ -8,12 +8,12 @@ project(
 
 sources = [
   'src/main.cpp',
-  'src/sql_cipher.cpp',
-  'src/sql_cipher_exception.cpp'
+  'src/sql_cipher/error.cpp',
+  'src/sql_cipher/connection.cpp'
 ]
 
 sqlcipher = dependency('sqlcipher')
 
-incdir = include_directories('inc')
+incdir = include_directories('src')
 #add_global_arguments('-H', language : 'cpp')
 executable('zefir', sources, include_directories : incdir, dependencies : [sqlcipher])
