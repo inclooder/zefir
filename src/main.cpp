@@ -1,8 +1,22 @@
 #include <iostream>
 #include "sql_cipher/connection.hpp"
 #include "sql_cipher/result.hpp"
+#include <boost/log/expressions.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+
+namespace logging = boost::log;
+
+void configureLogger() {
+  logging::core::get()->set_filter
+  (
+   logging::trivial::severity >= logging::trivial::info
+  );
+}
+
 
 int main(int argc, char **argv) {
+  configureLogger();
   try {
     SqlCipher::Connection db("zefir.db", "mypass");
     db.execute("DROP TABLE IF EXISTS numbers;");

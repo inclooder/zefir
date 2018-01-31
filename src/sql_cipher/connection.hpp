@@ -6,9 +6,10 @@
 #include <string>
 #include "sql_cipher/error.hpp"
 #include "sql_cipher/result.hpp"
+#include "framework/logger.hpp"
 
 namespace SqlCipher {
-  class Connection {
+  class Connection : public Framework::Logger {
     public:
       Connection(const std::string & dbPath, const std::string & key);
       Result execute(const std::string & query);

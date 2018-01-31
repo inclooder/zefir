@@ -20,7 +20,7 @@ namespace SqlCipher {
     Result result;
     std::vector<std::string> columnNames;
     std::vector<std::vector<std::string>> rows;
-    std::cout << "Executing: " << query << std::endl;
+    BOOST_LOG(Connection::logger) << "Executing: " << query;
     auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
       Result * result = reinterpret_cast<Result *>(res);
       std::map<std::string, std::string> row;
