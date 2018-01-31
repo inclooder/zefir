@@ -9,6 +9,8 @@ namespace Zefir {
   class SecureStore {
     public:
       virtual void add(const SecureMessage & message) = 0;
+      virtual bool unlock(const std::string & password) = 0;
+      virtual void lock() = 0;
       virtual std::unique_ptr<SecureMessage> findByField(const std::string & name, const std::string & value) = 0;
       virtual std::vector<SecureMessage> all() = 0;
       virtual ~SecureStore() = 0;
