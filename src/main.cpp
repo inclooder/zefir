@@ -8,17 +8,18 @@
 namespace logging = boost::log;
 
 void configureLogger() {
-  logging::core::get()->set_filter
-  (
-   logging::trivial::severity >= logging::trivial::info
-  );
+  /* logging::core::get()->set_filter */
+  /* ( */
+  /*   logging::trivial::severity >= logging::trivial::info */
+  /* ); */
 }
 
 
 int main(int argc, char **argv) {
   configureLogger();
   try {
-    SqlCipher::Connection db("zefir.db", "mypass");
+    SqlCipher::Connection db("zefir.db");
+    db.setPassword("mypass");
     db.execute("DROP TABLE IF EXISTS numbers;");
     db.execute("CREATE TABLE IF NOT EXISTS numbers(id integer PRIMARY KEY, name text);");
     db.execute("INSERT INTO numbers (name) VALUES ('jeden'), ('dwa'), ('trzy');");

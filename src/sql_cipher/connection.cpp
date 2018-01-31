@@ -1,26 +1,27 @@
 #include "sql_cipher/connection.hpp"
-#include <iostream>
 #include <vector>
 
 namespace SqlCipher {
-  Connection::Connection(const std::string & dbPath, const std::string & key) {
+  Connection::Connection(const std::string & dbPath) {
     if(SQLITE_OK != sqlite3_open(dbPath.c_str(), &dbHandle)){
       const char * errorMessage = sqlite3_errmsg(dbHandle);
       throw Error(errorMessage);
     }
-    auto retVal = sqlite3_key(dbHandle, key.c_str(), key.size());
-    std::cout << "sqlite3_key return value = " << retVal << std::endl;
   }
 
   Connection::~Connection(){
     sqlite3_close(dbHandle);
   }
 
+  void Connection::setPassword(const std::string & password) {
+    sqlite3_key(dbHandle, password.c_str(), password.size());
+  }
+
   Result Connection::execute(const std::string & query) {
     Result result;
     std::vector<std::string> columnNames;
     std::vector<std::vector<std::string>> rows;
-    BOOST_LOG(Connection::logger) << "Executing: " << query;
+    BOOST_LOG(logger) << "Executing SQL: " << query;
     auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
       Result * result = reinterpret_cast<Result *>(res);
       std::map<std::string, std::string> row;
@@ -34,7 +35,7 @@ namespace SqlCipher {
     };
 
     auto retVal = sqlite3_exec(dbHandle, query.c_str(), execCallback, &result, nullptr);
-    std::cout << "sqlite3_exec return value = " << retVal << std::endl;
+    BOOST_LOG(logger) << "sqlite3_exec return value = " << retVal;
     return result;
   }
 };

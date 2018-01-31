@@ -1,5 +1,4 @@
 #include "sql_cipher/result.hpp"
-#include <iostream>
 #include <algorithm>
 
 namespace SqlCipher {

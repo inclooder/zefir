@@ -11,9 +11,10 @@
 namespace SqlCipher {
   class Connection : public Framework::Logger {
     public:
-      Connection(const std::string & dbPath, const std::string & key);
-      Result execute(const std::string & query);
+      Connection(const std::string & dbPath);
       ~Connection();
+      void setPassword(const std::string & password);
+      Result execute(const std::string & query);
     private:
       sqlite3 * dbHandle;
   };
