@@ -16,27 +16,25 @@ namespace SqlCipher {
     sqlite3_close(dbHandle);
   }
 
-  void Connection::execute(const std::string & query) {
+  Result Connection::execute(const std::string & query) {
+    Result result;
     std::vector<std::string> columnNames;
     std::vector<std::vector<std::string>> rows;
     std::cout << "Executing: " << query << std::endl;
-    auto execCallback = [](void *, int numColumns, char ** values, char ** columns) -> int {
-      std::cout << "received " << numColumns << " columns" << std::endl;
-      /* bool populateColumns = columnNames.size() == 0; */
-      std::vector<std::string> row;
+    auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
+      Result * result = reinterpret_cast<Result *>(res);
+      std::map<std::string, std::string> row;
       for(int i = 0; i < numColumns; ++i) {
         auto value = values[i];
         auto column = columns[i];
-        std::cout << column << " => " << value << std::endl;
-        /* if(populateColumns) columnNames.push_back(column); */
-        row.push_back(value);
+        row.insert({ column, value });
       }
-      /* rows.push_back(row); */
+      result->addRow(row);
       return 0;
     };
 
-    auto retVal = sqlite3_exec(dbHandle, query.c_str(), execCallback, nullptr, nullptr);
+    auto retVal = sqlite3_exec(dbHandle, query.c_str(), execCallback, &result, nullptr);
     std::cout << "sqlite3_exec return value = " << retVal << std::endl;
-
+    return result;
   }
 };

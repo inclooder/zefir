@@ -5,12 +5,13 @@
 #include <sqlite3.h>
 #include <string>
 #include "sql_cipher/error.hpp"
+#include "sql_cipher/result.hpp"
 
 namespace SqlCipher {
   class Connection {
     public:
       Connection(const std::string & dbPath, const std::string & key);
-      void execute(const std::string & query);
+      Result execute(const std::string & query);
       ~Connection();
     private:
       sqlite3 * dbHandle;
