@@ -12,7 +12,8 @@ sources = [
   'src/sql_cipher/connection.cpp',
   'src/sql_cipher/result.cpp',
   'src/framework/logger.cpp',
-  'src/zefir/secret_message.cpp'
+  'src/zefir/secret_message.cpp',
+  'src/zefir/sql_cipher_store.cpp'
 ]
 
 boost = dependency('boost', modules : ['thread', 'system', 'log'])
