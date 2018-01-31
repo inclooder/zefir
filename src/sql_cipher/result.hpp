@@ -7,11 +7,12 @@
 
 namespace SqlCipher {
   class Result {
+    friend class Connection;
     public:
-      void addRow(std::map<std::string, std::string> row);
-      std::vector<std::string> getColumns();
-      std::vector<std::vector<std::string>> getRows();
+      std::vector<std::string> getColumns() const;
+      std::vector<std::vector<std::string>> getRows() const;
     private:
+      void addRow(std::map<std::string, std::string> row);
       std::vector<std::string> columns;
       std::vector<std::vector<std::string>> rows;
   };
