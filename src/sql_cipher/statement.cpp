@@ -16,4 +16,42 @@ namespace SqlCipher {
   void Statement::setText(u8 position, const std::string & value) {
     sqlite3_bind_text(statementHandle, position, value.c_str(), value.size(), SQLITE_TRANSIENT);
   }
+  void Statement::execute() {
+    for(;;) {
+      int ret = sqlite3_step(statementHandle);
+      BOOST_LOG(logger) << "sqlite3_step " << ret;
+      if(ret != SQLITE_ROW) break;
+      int numOfColumns = sqlite3_column_count(statementHandle);
+      for(int columnIndex = 0; columnIndex < numOfColumns; ++columnIndex) {
+        int columnType = sqlite3_column_type(statementHandle, columnIndex);
+        BOOST_LOG(logger) << "column type is " << columnType;
+        switch(columnType) {
+          case SQLITE_INTEGER:
+            {
+              int intValue = sqlite3_column_int(statementHandle, columnIndex);
+              BOOST_LOG(logger) << "column value is " << intValue;
+              break;
+            }
+          case SQLITE_FLOAT:
+            {
+              double floatValue = sqlite3_column_double(statementHandle, columnIndex);
+              BOOST_LOG(logger) << "column value is " << floatValue;
+              break;
+            }
+          case SQLITE_BLOB:
+          case SQLITE_NULL:
+            break;
+          case SQLITE_TEXT:
+            {
+              const unsigned char * textPtr = sqlite3_column_text(statementHandle, columnIndex);
+              std::string textValue(reinterpret_cast<const char *>(textPtr));
+              BOOST_LOG(logger) << "column value is " << textValue;
+              break;
+            }
+            break;
+        }
+      }
+    }
+    sqlite3_reset(statementHandle);
+  }
 };

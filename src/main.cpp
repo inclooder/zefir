@@ -1,6 +1,7 @@
 #include <iostream>
 #include "sql_cipher/connection.hpp"
 #include "sql_cipher/result.hpp"
+#include "sql_cipher/statement.hpp"
 #include <boost/log/expressions.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
@@ -23,6 +24,10 @@ int main(int argc, char **argv) {
     db.execute("DROP TABLE IF EXISTS numbers;");
     db.execute("CREATE TABLE IF NOT EXISTS numbers(id integer PRIMARY KEY, name text);");
     db.execute("INSERT INTO numbers (name) VALUES ('jeden'), ('dwa'), ('trzy');");
+
+    SqlCipher::Statement st(db, "SELECT * FROM numbers WHERE name = ?;");
+    st.setText(1, "dwa");
+    st.execute();
     SqlCipher::Result result = db.execute("SELECT * FROM numbers;");
     auto columns = result.getColumns();
     for(auto& column : columns) {
@@ -36,7 +41,6 @@ int main(int argc, char **argv) {
       }
       std::cout << std::endl;
     }
-    db.execute("SELECT count(*) FROM sqlite_master;");
   } catch (std::exception& e) {
     std::cerr << e.what() << std::endl;
     std::exit(EXIT_FAILURE);
