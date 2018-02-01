@@ -17,11 +17,11 @@ namespace SqlCipher {
     sqlite3_key(dbHandle, password.c_str(), password.size());
   }
 
-  Result Connection::execute(const std::string & query) {
+  Result Connection::execute(const std::string & sql) {
     Result result;
     std::vector<std::string> columnNames;
     std::vector<std::vector<std::string>> rows;
-    BOOST_LOG(logger) << "Executing SQL: " << query;
+    BOOST_LOG(logger) << "Executing SQL: " << sql;
     auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
       Result * result = reinterpret_cast<Result *>(res);
       std::map<std::string, std::string> row;
@@ -34,7 +34,7 @@ namespace SqlCipher {
       return 0;
     };
 
-    auto retVal = sqlite3_exec(dbHandle, query.c_str(), execCallback, &result, nullptr);
+    auto retVal = sqlite3_exec(dbHandle, sql.c_str(), execCallback, &result, nullptr);
     BOOST_LOG(logger) << "sqlite3_exec return value = " << retVal;
     return result;
   }

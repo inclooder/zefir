@@ -10,6 +10,7 @@
 
 namespace SqlCipher {
   class Connection : public Framework::Logger {
+    friend class Statement;
     public:
       Connection(const std::string & dbPath);
       ~Connection();

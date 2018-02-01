@@ -11,6 +11,7 @@ sources = [
   'src/sql_cipher/error.cpp',
   'src/sql_cipher/connection.cpp',
   'src/sql_cipher/result.cpp',
+  'src/sql_cipher/statement.cpp',
   'src/framework/logger.cpp',
   'src/zefir/secret_message.cpp',
   'src/zefir/sql_cipher_store.cpp'
