@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     db.execute("CREATE TABLE IF NOT EXISTS numbers(id integer PRIMARY KEY, name text);");
     db.execute("INSERT INTO numbers (name) VALUES ('jeden'), ('dwa'), ('trzy');");
 
-    SqlCipher::Statement st(db, "SELECT * FROM numbers WHERE name = ?;");
+    SqlCipher::Statement st = db.statement("SELECT * FROM numbers WHERE name = ?;");
     st.setText(1, "dwa");
     st.execute();
     SqlCipher::Result result = db.execute("SELECT * FROM numbers;");

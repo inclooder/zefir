@@ -38,4 +38,8 @@ namespace SqlCipher {
     BOOST_LOG(logger) << "sqlite3_exec return value = " << retVal;
     return result;
   }
+
+  Statement Connection::statement(const std::string & sql) {
+    return Statement(*this, sql);
+  }
 };

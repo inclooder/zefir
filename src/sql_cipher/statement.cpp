@@ -1,4 +1,5 @@
 #include "sql_cipher/statement.hpp"
+#include "sql_cipher/connection.hpp"
 
 namespace SqlCipher {
   Statement::Statement(Connection & connection, const std::string & sql) {
