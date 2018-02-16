@@ -24,7 +24,7 @@ namespace SqlCipher {
     BOOST_LOG(logger) << "Executing SQL: " << sql;
     auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
       Result * result = reinterpret_cast<Result *>(res);
-      std::map<std::string, std::string> row;
+      std::map<std::string, Result::Value> row;
       for(int i = 0; i < numColumns; ++i) {
         auto value = values[i];
         auto column = columns[i];

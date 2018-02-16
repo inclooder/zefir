@@ -2,13 +2,13 @@
 #include <algorithm>
 
 namespace SqlCipher {
-  void Result::addRow(std::map<std::string, std::string> row){
+  void Result::addRow(std::map<std::string, Result::Value> row){
     for(const auto& entry : row) {
       if(std::find(columns.begin(), columns.end(), entry.first) == columns.end()) {
         columns.push_back(entry.first);
       }
     }
-    std::vector<std::string> newRow;
+    std::vector<Result::Value> newRow;
     for(const auto& column : columns) {
       newRow.push_back(row[column]);
     }
@@ -19,7 +19,7 @@ namespace SqlCipher {
     return columns;
   }
 
-  std::vector<std::vector<std::string>> Result::getRows() const {
+  std::vector<std::vector<Result::Value>> Result::getRows() const {
     return rows;
   }
 };

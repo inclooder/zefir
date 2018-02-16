@@ -37,7 +37,9 @@ int main(int argc, char **argv) {
     auto rows = result.getRows();
     for(auto& row : rows) {
       for(auto& entry : row) {
-        std::cout << entry << " ";
+        std::visit([](const auto &val) {
+            std::cout << val << std::endl;
+        }, entry);
       }
       std::cout << std::endl;
     }
