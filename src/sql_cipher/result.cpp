@@ -15,11 +15,15 @@ namespace SqlCipher {
     rows.push_back(newRow);
   }
 
+  void Result::addRow(Result::Row row){
+    rows.push_back(row);
+  }
+
   std::vector<std::string> Result::getColumns() const {
     return columns;
   }
 
-  std::vector<std::vector<Result::Value>> Result::getRows() const {
+  std::vector<Result::Row> Result::getRows() const {
     return rows;
   }
 };

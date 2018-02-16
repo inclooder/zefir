@@ -2,6 +2,7 @@
 #define SQL_CIPHER_STATEMENT_H
 
 #include "sql_cipher/sqlite.hpp"
+#include "sql_cipher/result.hpp"
 #include "framework/types.hpp"
 #include "framework/logger.hpp"
 
@@ -13,7 +14,7 @@ namespace SqlCipher {
       void setDouble(u8 position, double value);
       void setInt(u8 position, i32 value);
       void setText(u8 position, const std::string & value);
-      void execute();
+      Result execute();
       ~Statement();
     private:
       Statement(Connection & connection, const std::string & sql);

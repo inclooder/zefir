@@ -17,8 +17,10 @@ namespace SqlCipher {
   void Statement::setText(u8 position, const std::string & value) {
     sqlite3_bind_text(statementHandle, position, value.c_str(), value.size(), SQLITE_TRANSIENT);
   }
-  void Statement::execute() {
+  Result Statement::execute() {
+    Result result;
     for(;;) {
+      Result::Row row;
       int ret = sqlite3_step(statementHandle);
       BOOST_LOG(logger) << "sqlite3_step " << ret;
       if(ret != SQLITE_ROW) break;
@@ -31,12 +33,14 @@ namespace SqlCipher {
             {
               int intValue = sqlite3_column_int(statementHandle, columnIndex);
               BOOST_LOG(logger) << "column value is " << intValue;
+              row.push_back(intValue);
               break;
             }
           case SQLITE_FLOAT:
             {
               double floatValue = sqlite3_column_double(statementHandle, columnIndex);
               BOOST_LOG(logger) << "column value is " << floatValue;
+              row.push_back(floatValue);
               break;
             }
           case SQLITE_BLOB:
@@ -47,12 +51,15 @@ namespace SqlCipher {
               const unsigned char * textPtr = sqlite3_column_text(statementHandle, columnIndex);
               std::string textValue(reinterpret_cast<const char *>(textPtr));
               BOOST_LOG(logger) << "column value is " << textValue;
+              row.push_back(textValue);
               break;
             }
             break;
         }
       }
+      result.addRow(row);
     }
     sqlite3_reset(statementHandle);
+    return result;
   }
 };
