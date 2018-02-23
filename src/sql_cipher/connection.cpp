@@ -18,25 +18,7 @@ namespace SqlCipher {
   }
 
   Result Connection::execute(const std::string & sql) {
-    Result result;
-    std::vector<std::string> columnNames;
-    std::vector<std::vector<std::string>> rows;
-    BOOST_LOG(logger) << "Executing SQL: " << sql;
-    auto execCallback = [](void * res, int numColumns, char ** values, char ** columns) -> int {
-      Result * result = reinterpret_cast<Result *>(res);
-      std::map<std::string, Result::Value> row;
-      for(int i = 0; i < numColumns; ++i) {
-        auto value = values[i];
-        auto column = columns[i];
-        row.insert({ column, value });
-      }
-      result->addRow(row);
-      return 0;
-    };
-
-    auto retVal = sqlite3_exec(dbHandle, sql.c_str(), execCallback, &result, nullptr);
-    BOOST_LOG(logger) << "sqlite3_exec return value = " << retVal;
-    return result;
+    return statement(sql).execute();
   }
 
   Statement Connection::statement(const std::string & sql) {
