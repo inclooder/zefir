@@ -44,7 +44,10 @@ namespace SqlCipher {
               break;
             }
           case SQLITE_BLOB:
+            //#TODO
+            break;
           case SQLITE_NULL:
+            //#TODO
             break;
           case SQLITE_TEXT:
             {
