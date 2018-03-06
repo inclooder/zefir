@@ -2,6 +2,7 @@
 #define ZEFIR_SQL_CIPHER_STORE_H
 
 #include "zefir/store.hpp"
+#include "sql_cipher/connection.hpp"
 
 namespace Zefir {
   class SqlCipherStore : public Store {
@@ -10,6 +11,9 @@ namespace Zefir {
       u32 countSecrets() override;
       SqlCipherStore(const std::string & password);
       ~SqlCipherStore() override;
+    private:
+      void initDatabase();
+      SqlCipher::Connection db;
   };
 };
 
