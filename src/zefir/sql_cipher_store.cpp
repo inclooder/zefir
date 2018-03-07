@@ -18,8 +18,17 @@ namespace Zefir {
   }
 
   void SqlCipherStore::initDatabase() {
-    db.execute("CREATE TABLE IF NOT EXISTS vaults(id integer PRIMARY KEY, name text);");
-    db.execute("CREATE TABLE IF NOT EXISTS secrets(id integer PRIMARY KEY, name text, description text);");
-    db.execute("CREATE TABLE IF NOT EXISTS properties(id integer PRIMARY KEY, name text, value text);");
+    db.execute(
+      "CREATE TABLE IF NOT EXISTS vaults"
+      "(id integer PRIMARY KEY, name text);"
+    );
+    db.execute(
+      "CREATE TABLE IF NOT EXISTS secrets"
+      "(id integer PRIMARY KEY, vault_id integer, name text, description text);"
+    );
+    db.execute(
+      "CREATE TABLE IF NOT EXISTS properties"
+      "(id integer PRIMARY KEY, secret_id integer, name text, value text);"
+    );
   }
 };
