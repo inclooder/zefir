@@ -1,4 +1,7 @@
 #include "zefir/sql_cipher_store.hpp"
+#include "sql_cipher/result.hpp"
+#include <iostream>
+#include <variant>
 
 namespace Zefir {
   SqlCipherStore::SqlCipherStore(const std::string & password) : db("zefir.db") {
@@ -11,7 +14,10 @@ namespace Zefir {
   }
 
   u32 SqlCipherStore::countSecrets() {
-    return 0;
+    SqlCipher::Result result = db.execute("SELECT COUNT(*) from secrets;");
+    auto value = result.getRows().front().front();
+
+    return std::get<int>(value);
   }
 
   SqlCipherStore::~SqlCipherStore() {
@@ -20,7 +26,7 @@ namespace Zefir {
   void SqlCipherStore::initDatabase() {
     db.execute(
       "CREATE TABLE IF NOT EXISTS secrets"
-      "(id integer PRIMARY KEY, vault_id integer, name text, description text);"
+      "(id integer PRIMARY KEY, name text, description text);"
     );
     db.execute(
       "CREATE TABLE IF NOT EXISTS properties"

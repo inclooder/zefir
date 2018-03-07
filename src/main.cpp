@@ -24,6 +24,8 @@ int main(int argc, char **argv) {
   try {
     SqlCipherStore cipherStore = SqlCipherStore("mypass");
     Store & store = dynamic_cast<Store&>(cipherStore);
+    auto numOfSecrets = store.countSecrets();
+    std::cout << "Number of secerts: " << numOfSecrets << std::endl;
     /* SqlCipher::Connection db("zefir.db"); */
     /* db.setPassword("mypass"); */
     /* db.execute("DROP TABLE IF EXISTS numbers;"); */
