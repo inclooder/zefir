@@ -6,7 +6,7 @@
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "zefir/sql_cipher_store.hpp"
+#include "zefir/repo.hpp"
 
 namespace logging = boost::log;
 
@@ -22,10 +22,12 @@ using namespace Zefir;
 int main(int argc, char **argv) {
   configureLogger();
   try {
-    SqlCipherStore cipherStore = SqlCipherStore("mypass");
-    Store & store = dynamic_cast<Store&>(cipherStore);
-    auto numOfSecrets = store.countSecrets();
-    std::cout << "Number of secerts: " << numOfSecrets << std::endl;
+    Repo repo("mypass");
+    auto secrets = repo.all();
+    for(const auto & secret : secrets) {
+      std::cout << secret.getName() << std::endl;
+      std::cout << secret.getDescription() << std::endl;
+    }
     /* SqlCipher::Connection db("zefir.db"); */
     /* db.setPassword("mypass"); */
     /* db.execute("DROP TABLE IF EXISTS numbers;"); */
