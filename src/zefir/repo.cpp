@@ -1,5 +1,6 @@
 #include "zefir/repo.hpp"
 #include "sql_cipher/statement.hpp"
+#include <vector>
 
 namespace Zefir {
   Repo::Repo(const std::string & password) : db("zefir.db") {
@@ -22,20 +23,23 @@ namespace Zefir {
 
   std::vector<Secret> Repo::all() {
     std::vector<Secret> secrets;
-    SqlCipher::Result result = db.execute("SELECT name, description FROM secrets;");
+    SqlCipher::Result result = db.execute("SELECT name, description, password FROM secrets;");
     auto rows = result.getRows();
     for(const auto & row : rows) {
       Secret secret;
       std::string name = std::get<std::string>(row.at(0));
       std::string description = std::get<std::string>(row.at(1));
+      std::string password = std::get<std::string>(row.at(2));
       secret.setName(name);
       secret.setDescription(description);
+      secret.setPassword(password);
       secrets.push_back(secret);
     }
     return secrets;
   }
 
   bool Repo::findById(Secret & secret) const {
+    return false;
   }
 
   void Repo::initDatabase() {
@@ -47,5 +51,23 @@ namespace Zefir {
       "CREATE TABLE IF NOT EXISTS properties"
       "(id integer PRIMARY KEY, secret_id integer, name text, value text);"
     );
+  }
+
+  std::vector<Secret> Repo::findByName(const std::string & name) {
+    std::vector<Secret> secrets;
+    auto st = db.statement("SELECT name, description, password FROM secrets WHERE name = ?;");
+    st.setText(1, name);
+    auto rows = st.execute().getRows();
+    for(const auto & row : rows) {
+      Secret secret;
+      std::string name = std::get<std::string>(row.at(0));
+      std::string description = std::get<std::string>(row.at(1));
+      std::string password = std::get<std::string>(row.at(2));
+      secret.setName(name);
+      secret.setDescription(description);
+      secret.setPassword(password);
+      secrets.push_back(secret);
+    }
+    return secrets;
   }
 };

@@ -3,6 +3,7 @@
 #include <readline/history.h>
 #include "zefir/secret.hpp"
 #include <iostream>
+#include <regex>
 #include <termios.h>
 
 
@@ -24,6 +25,14 @@ namespace Zefir::Cli {
         return 0;
       } else if(input.compare("list") == 0) {
         listSecrets();
+      } else if(input.compare(0, 4, "show") == 0) {
+        std::regex expression("^show\\s+(\\w+)\\s*$");
+        std::smatch matches;
+        if(std::regex_match(input, matches, expression)){
+          showPassword(matches[1].str());
+        } else {
+          std::cout << "You need to specify the name!" << std::endl;
+        }
       } else if(input.compare("new") == 0) {
         newSecret();
       } else {
@@ -61,11 +70,20 @@ namespace Zefir::Cli {
     }
   }
 
+  void App::showPassword(const std::string & name) {
+    auto secrets = repo->findByName(name);
+    if(secrets.size() == 0) {
+      std::cout << "No entry named: " << name << std::endl;
+      return;
+    }
+    std::cout << secrets[0].getPassword() << std::endl;
+  }
+
   void App::newSecret() {
     Secret secret;
     secret.setName(readLine("Name: "));
     secret.setDescription(readLine("Description: "));
-    readPassword("Password: ");
+    secret.setPassword(readPassword("Password: "));
     repo->save(secret);
   }
 

@@ -13,6 +13,7 @@ namespace Zefir {
       bool save(std::vector<Secret> & secret);
       std::vector<Secret> all();
       bool findById(Secret & secret) const;
+      std::vector<Secret> findByName(const std::string & name);
     private:
       void initDatabase();
       SqlCipher::Connection db;
