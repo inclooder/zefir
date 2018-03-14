@@ -8,9 +8,10 @@ namespace Zefir {
   }
 
   bool Repo::save(Secret & secret) {
-    auto st = db.statement("INSERT INTO secrets (name, description) VALUES (?, ?)");
+    auto st = db.statement("INSERT INTO secrets (name, description, password) VALUES (?, ?, ?)");
     st.setText(1, secret.getName());
     st.setText(2, secret.getDescription());
+    st.setText(3, secret.getPassword());
     st.execute();
     return true;
   }
@@ -40,7 +41,7 @@ namespace Zefir {
   void Repo::initDatabase() {
     db.execute(
       "CREATE TABLE IF NOT EXISTS secrets"
-      "(id integer PRIMARY KEY, name text, description text);"
+      "(id integer PRIMARY KEY, name text, description text, password text);"
     );
     db.execute(
       "CREATE TABLE IF NOT EXISTS properties"
