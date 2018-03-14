@@ -1,4 +1,5 @@
 #include "zefir/repo.hpp"
+#include "sql_cipher/statement.hpp"
 
 namespace Zefir {
   Repo::Repo(const std::string & password) : db("zefir.db") {
@@ -7,9 +8,15 @@ namespace Zefir {
   }
 
   bool Repo::save(Secret & secret) {
+    auto st = db.statement("INSERT INTO secrets (name, description) VALUES (?, ?)");
+    st.setText(1, secret.getName());
+    st.setText(2, secret.getDescription());
+    st.execute();
+    return true;
   }
 
   bool Repo::save(std::vector<Secret> & secret) {
+    return false;
   }
 
   std::vector<Secret> Repo::all() {

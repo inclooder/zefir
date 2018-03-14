@@ -7,14 +7,15 @@
 #include <boost/log/trivial.hpp>
 
 #include "zefir/repo.hpp"
+#include "zefir/cli/app.hpp"
 
 namespace logging = boost::log;
 
 void configureLogger() {
-  /* logging::core::get()->set_filter */
-  /* ( */
-  /*   logging::trivial::severity >= logging::trivial::info */
-  /* ); */
+  logging::core::get()->set_filter
+  (
+    logging::trivial::severity >= logging::trivial::info
+  );
 }
 
 using namespace Zefir;
@@ -22,12 +23,14 @@ using namespace Zefir;
 int main(int argc, char **argv) {
   configureLogger();
   try {
-    Repo repo("mypass");
-    auto secrets = repo.all();
-    for(const auto & secret : secrets) {
-      std::cout << secret.getName() << std::endl;
-      std::cout << secret.getDescription() << std::endl;
-    }
+    std::vector<std::string> args;
+    Cli::App app(args);
+    return app.run();
+    /* auto secrets = repo.all(); */
+    /* for(const auto & secret : secrets) { */
+    /*   std::cout << secret.getName() << std::endl; */
+    /*   std::cout << secret.getDescription() << std::endl; */
+    /* } */
     /* SqlCipher::Connection db("zefir.db"); */
     /* db.setPassword("mypass"); */
     /* db.execute("DROP TABLE IF EXISTS numbers;"); */
