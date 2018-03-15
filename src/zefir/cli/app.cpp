@@ -70,15 +70,6 @@ namespace Zefir::Cli {
     }
   }
 
-  void App::showPassword(const std::string & name) {
-    auto secrets = repo->findByName(name);
-    if(secrets.size() == 0) {
-      std::cout << "No entry named: " << name << std::endl;
-      return;
-    }
-    std::cout << secrets[0].getPassword() << std::endl;
-  }
-
   void App::newSecret() {
     Secret secret;
     secret.setName(readLine("Name: "));

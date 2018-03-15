@@ -18,7 +18,6 @@ namespace Zefir::Cli {
       std::string readPassword(const std::string & prompt = "zefir> ");
       void listSecrets();
       void newSecret();
-      void showPassword(const std::string & name);
       Repo * repo;
   };
 };
