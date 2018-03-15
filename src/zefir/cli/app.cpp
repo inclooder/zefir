@@ -5,7 +5,7 @@
 #include <iostream>
 #include <regex>
 #include <termios.h>
-
+#include "zefir/cli/commands/show_password.hpp"
 
 namespace Zefir::Cli {
   App::App(std::vector<std::string> args) {
@@ -29,7 +29,7 @@ namespace Zefir::Cli {
         std::regex expression("^show\\s+(\\w+)\\s*$");
         std::smatch matches;
         if(std::regex_match(input, matches, expression)){
-          showPassword(matches[1].str());
+          Commands::ShowPassword(matches[1].str(), repo).execute();
         } else {
           std::cout << "You need to specify the name!" << std::endl;
         }

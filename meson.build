@@ -16,7 +16,9 @@ sources = [
   'src/zefir/property.cpp',
   'src/zefir/repo.cpp',
   'src/zefir/secret.cpp',
-  'src/zefir/cli/app.cpp'
+  'src/zefir/cli/app.cpp',
+  'src/zefir/cli/command.hpp',
+  'src/zefir/cli/commands/show_password.cpp'
 ]
 
 boost = dependency('boost', modules : ['thread', 'system', 'log'])
