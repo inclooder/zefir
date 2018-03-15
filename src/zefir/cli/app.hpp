@@ -5,6 +5,7 @@
 #include <vector>
 #include "zefir/repo.hpp"
 #include "framework/types.hpp"
+#include "zefir/cli/terminal.hpp"
 
 namespace Zefir::Cli {
   class App {
@@ -14,11 +15,10 @@ namespace Zefir::Cli {
       ~App();
     private:
       void exit();
-      std::string readLine(const std::string & prompt = "zefir> ");
-      std::string readPassword(const std::string & prompt = "zefir> ");
       void listSecrets();
       void newSecret();
       Repo * repo;
+      Terminal terminal;
   };
 };
 

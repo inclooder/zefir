@@ -18,6 +18,7 @@ sources = [
   'src/zefir/secret.cpp',
   'src/zefir/cli/app.cpp',
   'src/zefir/cli/command.hpp',
+  'src/zefir/cli/terminal.cpp',
   'src/zefir/cli/commands/show_password.cpp'
 ]
 

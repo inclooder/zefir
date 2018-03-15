@@ -1,23 +1,19 @@
 #include "zefir/cli/app.hpp"
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "zefir/secret.hpp"
 #include <iostream>
 #include <regex>
-#include <termios.h>
 #include "zefir/cli/commands/show_password.hpp"
 
 namespace Zefir::Cli {
   App::App(std::vector<std::string> args) {
-    rl_bind_key('\t', rl_complete);
   }
 
   i32 App::run() {
-    std::string masterPassword = readPassword("Master password: ");
+    std::string masterPassword = terminal.readPassword("Master password: ");
     Repo repo(masterPassword);
     this->repo = &repo;
     while(true) {
-      auto input = readLine();
+      auto input = terminal.readLine("zefir> ");
       if(input.compare("") == 0) {
         //Do nothing
       } else if(input.compare("quit") == 0 || input.compare("exit") == 0) {
@@ -45,14 +41,6 @@ namespace Zefir::Cli {
   App::~App() {
   }
 
-  std::string App::readLine(const std::string & prompt) {
-    char * input = readline(prompt.c_str());
-    add_history(input);
-    std::string strInput(input);
-    free(input);
-    return strInput;
-  }
-
   void App::listSecrets() {
     std::string delimiter = " - ";
     auto secrets = repo->all();
@@ -72,24 +60,9 @@ namespace Zefir::Cli {
 
   void App::newSecret() {
     Secret secret;
-    secret.setName(readLine("Name: "));
-    secret.setDescription(readLine("Description: "));
-    secret.setPassword(readPassword("Password: "));
+    secret.setName(terminal.readLine("Name: "));
+    secret.setDescription(terminal.readLine("Description: "));
+    secret.setPassword(terminal.readPassword("Password: "));
     repo->save(secret);
-  }
-
-  std::string App::readPassword(const std::string & prompt) {
-    std::cout << prompt;
-    struct termios oldAttr, newAttr;
-    tcgetattr(STDIN_FILENO, &oldAttr);
-    newAttr = oldAttr;
-    newAttr.c_lflag &= ~ECHO;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &newAttr);
-    // TODO: add error checking
-    std::string password;
-    std::cin >> password;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &oldAttr);
-    std::cout << std::endl;
-    return password;
   }
 };
