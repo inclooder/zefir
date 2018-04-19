@@ -32,4 +32,16 @@ namespace Zefir::Cli {
     free(input);
     return strInput;
   }
+
+  void Terminal::writeLine(const std::string & line) {
+    std::cout << line << std::endl;
+  }
+
+  void Terminal::write(const std::string & line) {
+    std::cout << line;
+  }
+
+  void Terminal::breakLine() {
+    std::cout << std::endl;
+  }
 };

@@ -17,7 +17,7 @@ namespace Zefir::Cli {
       if(input.compare("") == 0) {
         //Do nothing
       } else if(input.compare("quit") == 0 || input.compare("exit") == 0) {
-        std::cout << "Bye!" << std::endl;
+        terminal.writeLine("Bye!");
         return 0;
       } else if(input.compare("list") == 0) {
         listSecrets();
@@ -27,12 +27,14 @@ namespace Zefir::Cli {
         if(std::regex_match(input, matches, expression)){
           Commands::ShowPassword(matches[1].str(), repo).execute();
         } else {
-          std::cout << "You need to specify the name!" << std::endl;
+          terminal.writeLine("You need to specify the name!");
         }
       } else if(input.compare("new") == 0) {
         newSecret();
       } else {
-        std::cout << "Unknown command: " << input << std::endl;
+        terminal.write("Unknown command: ");
+        terminal.write(input);
+        terminal.breakLine();
       }
     }
     return 0;
@@ -45,16 +47,20 @@ namespace Zefir::Cli {
     std::string delimiter = " - ";
     auto secrets = repo->all();
     if(secrets.size() > 0) {
-      std::cout << "NAME" << delimiter << "DESCRIPTION" << std::endl;
+      terminal.write("NAME");
+      terminal.write(delimiter);
+      terminal.write("DESCRIPTION");
+      terminal.breakLine();
     } else {
       return;
     }
     for(const auto & secret : secrets) {
-      std::cout << secret.getName();
+      terminal.write(secret.getName());
       if(secret.getDescription().size() > 0) {
-        std::cout << delimiter << secret.getDescription();
+        terminal.write(delimiter);
+        terminal.write(secret.getDescription());
       }
-      std::cout << std::endl;
+      terminal.breakLine();
     }
   }
 
