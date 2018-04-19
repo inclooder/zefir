@@ -13,8 +13,8 @@ namespace SqlCipher {
     sqlite3_close(dbHandle);
   }
 
-  void Connection::setPassword(const std::string & password) {
-    sqlite3_key(dbHandle, password.c_str(), password.size());
+  bool Connection::setPassword(const std::string & password) {
+    return sqlite3_key(dbHandle, password.c_str(), password.size()) == SQLITE_OK;
   }
 
   Result Connection::execute(const std::string & sql) {

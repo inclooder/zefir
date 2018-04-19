@@ -14,7 +14,7 @@ namespace SqlCipher {
     public:
       Connection(const std::string & dbPath);
       ~Connection();
-      void setPassword(const std::string & password);
+      bool setPassword(const std::string & password);
       Result execute(const std::string & query);
       Statement statement(const std::string & sql);
     private:
