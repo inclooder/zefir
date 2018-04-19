@@ -4,11 +4,12 @@
 #include <vector>
 #include "zefir/secret.hpp"
 #include "sql_cipher/connection.hpp"
+#include <memory>
 
 namespace Zefir {
   class Repo {
     public:
-      Repo(const std::string & password);
+      Repo(std::shared_ptr<SqlCipher::Connection> db);
       bool save(Secret & secret);
       bool save(std::vector<Secret> & secret);
       std::vector<Secret> all();
@@ -16,7 +17,7 @@ namespace Zefir {
       std::vector<Secret> findByName(const std::string & name);
     private:
       void initDatabase();
-      SqlCipher::Connection db;
+      std::shared_ptr<SqlCipher::Connection> db;
   };
 };
 

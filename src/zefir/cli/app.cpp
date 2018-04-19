@@ -3,6 +3,7 @@
 #include <iostream>
 #include <regex>
 #include "zefir/cli/commands/show_password.hpp"
+#include <memory>
 
 namespace Zefir::Cli {
   App::App(std::vector<std::string> args) {
@@ -10,7 +11,12 @@ namespace Zefir::Cli {
 
   i32 App::run() {
     std::string masterPassword = terminal.readPassword("Master password: ");
-    Repo repo(masterPassword);
+    std::shared_ptr<SqlCipher::Connection> db(new SqlCipher::Connection("zefir.db"));
+    if(!db->setPassword(masterPassword)) {
+      terminal.writeLine("Incorrect master password!");
+      return 1;
+    }
+    Repo repo(db);
     this->repo = &repo;
     while(true) {
       auto input = terminal.readLine("zefir> ");

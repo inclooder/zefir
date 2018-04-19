@@ -14,7 +14,8 @@ namespace SqlCipher {
   }
 
   bool Connection::setPassword(const std::string & password) {
-    return sqlite3_key(dbHandle, password.c_str(), password.size()) == SQLITE_OK;
+    sqlite3_key(dbHandle, password.c_str(), password.size());
+    return sqlite3_exec(dbHandle, "SELECT count(*) FROM sqlite_master;", NULL, NULL, NULL) == SQLITE_OK;
   }
 
   Result Connection::execute(const std::string & sql) {
