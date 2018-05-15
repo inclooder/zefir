@@ -18,8 +18,10 @@ namespace Zefir::Cli {
     }
     Repo repo(db);
     this->repo = &repo;
+    initializeCommands();
     while(true) {
       auto input = terminal.readLine("zefir> ");
+
       if(input.compare("") == 0) {
         //Do nothing
       } else if(input.compare("quit") == 0 || input.compare("exit") == 0) {
@@ -27,16 +29,9 @@ namespace Zefir::Cli {
         return 0;
       } else if(input.compare("list") == 0) {
         listSecrets();
-      } else if(input.compare(0, 4, "show") == 0) {
-        std::regex expression("^show\\s+(\\w+)\\s*$");
-        std::smatch matches;
-        if(std::regex_match(input, matches, expression)){
-          Commands::ShowPassword(matches[1].str(), repo).execute();
-        } else {
-          terminal.writeLine("You need to specify the name!");
-        }
       } else if(input.compare("new") == 0) {
         newSecret();
+      } else if(findAndExecuteCommand(input)) {
       } else {
         terminal.write("Unknown command: ");
         terminal.write(input);
@@ -44,6 +39,22 @@ namespace Zefir::Cli {
       }
     }
     return 0;
+  }
+
+  void App::initializeCommands() {
+    std::shared_ptr<Command> command(new Commands::ShowPassword(this->repo));
+    this->commands.push_back(command);
+  }
+
+  bool App::findAndExecuteCommand(const std::string & input) {
+    for(auto & command : this->commands) {
+      command->setInput(input);
+      if(command->hasValidInput()) {
+        command->execute();
+        return true;
+      }
+    }
+    return false;
   }
 
   App::~App() {

@@ -8,11 +8,11 @@
 namespace Zefir::Cli::Commands {
   class ShowPassword : public Command {
     public:
-      ShowPassword(const std::string & name, Repo & repo);
+      ShowPassword(Repo * repo);
+      bool hasValidInput() override;
       u32 execute() override;
     private:
-      std::string name;
-      Repo & repo;
+      Repo * repo;
   };
 };
 
