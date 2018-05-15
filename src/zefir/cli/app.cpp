@@ -3,6 +3,7 @@
 #include <iostream>
 #include <regex>
 #include "zefir/cli/commands/show_password.hpp"
+#include "zefir/cli/commands/new_password.hpp"
 #include <memory>
 
 namespace Zefir::Cli {
@@ -29,8 +30,6 @@ namespace Zefir::Cli {
         return 0;
       } else if(input.compare("list") == 0) {
         listSecrets();
-      } else if(input.compare("new") == 0) {
-        newSecret();
       } else if(findAndExecuteCommand(input)) {
       } else {
         terminal.write("Unknown command: ");
@@ -42,8 +41,11 @@ namespace Zefir::Cli {
   }
 
   void App::initializeCommands() {
-    std::shared_ptr<Command> command(new Commands::ShowPassword(this->repo));
-    this->commands.push_back(command);
+    std::shared_ptr<Command> show_password_command(new Commands::ShowPassword(this->repo));
+    this->commands.push_back(show_password_command);
+
+    std::shared_ptr<Command> new_password_command(new Commands::NewPassword(this->repo, &this->terminal));
+    this->commands.push_back(new_password_command);
   }
 
   bool App::findAndExecuteCommand(const std::string & input) {
