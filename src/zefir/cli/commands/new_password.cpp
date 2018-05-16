@@ -11,7 +11,13 @@ namespace Zefir::Cli::Commands {
     Secret secret;
     secret.setName(terminal->readLine("Name: "));
     secret.setDescription(terminal->readLine("Description: "));
-    secret.setPassword(terminal->readPassword("Password: "));
+    auto password = terminal->readPassword("Password: ");
+    auto passwordConfirmation = terminal->readPassword("Password Confirmation: ");
+    if(password.compare(passwordConfirmation) != 0) {
+      terminal->writeLine("Passwords must match!");
+      return 2;
+    }
+    secret.setPassword(password);
     repo->save(secret);
     return 0;
   }
