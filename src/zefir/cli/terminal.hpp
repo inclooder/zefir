@@ -12,6 +12,7 @@ namespace Zefir::Cli {
       void writeLine(const std::string & line);
       void write(const std::string & line);
       void breakLine();
+      bool yesNoQuestion(const std::string & question);
   };
 };
 

@@ -44,4 +44,11 @@ namespace Zefir::Cli {
   void Terminal::breakLine() {
     std::cout << std::endl;
   }
+
+  bool Terminal::yesNoQuestion(const std::string & question) {
+    std::cout << question << " Y/N ";
+    std::string answer;
+    std::cin >> answer;
+    return answer.compare("Y") == 0;
+  }
 };
