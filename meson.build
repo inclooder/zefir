@@ -14,6 +14,7 @@ sources = [
   'src/sql_cipher/result.cpp',
   'src/sql_cipher/statement.cpp',
   'src/framework/logger.cpp',
+  'src/zefir/app.cpp',
   'src/zefir/property.cpp',
   'src/zefir/repo.cpp',
   'src/zefir/secret.cpp',
@@ -21,13 +22,15 @@ sources = [
   'src/zefir/cli/command.cpp',
   'src/zefir/cli/terminal.cpp',
   'src/zefir/cli/commands/show_password.cpp',
-  'src/zefir/cli/commands/new_password.cpp'
+  'src/zefir/cli/commands/new_password.cpp',
+  'src/zefir/gui/app.cpp'
 ]
 
 boost = dependency('boost', modules : ['thread', 'system', 'log'])
 sqlcipher = dependency('sqlcipher')
+gtkmm = dependency('gtkmm-3.0')
 readline = declare_dependency(link_args: '-lreadline')
 
 incdir = include_directories('src')
 #add_global_arguments('-H', language : 'cpp')
-executable('zefir', sources, include_directories : incdir, dependencies : [boost, sqlcipher, readline])
+executable('zefir', sources, include_directories : incdir, dependencies : [boost, sqlcipher, readline, gtkmm])

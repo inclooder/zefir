@@ -12,7 +12,7 @@
 namespace Zefir::Cli {
   class App {
     public:
-      App(std::vector<std::string> args);
+      App();
       i32 run();
       ~App();
     private:
