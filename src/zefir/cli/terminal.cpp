@@ -49,6 +49,6 @@ namespace Zefir::Cli {
     std::cout << question << " Y/N ";
     std::string answer;
     std::cin >> answer;
-    return answer.compare("Y") == 0;
+    return answer.compare("Y") == 0 || answer.compare("y") == 0;
   }
 };
