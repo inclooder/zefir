@@ -1,5 +1,5 @@
 #include "zefir/gui/app.hpp"
-#include <gtkmm.h>
+#include <iostream>
 
 namespace Zefir::Gui {
   App::App(int argc, char **argv) : argc(argc), argv(argv) {
@@ -7,9 +7,20 @@ namespace Zefir::Gui {
 
   int App::run() {
     auto app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
-    Gtk::Window window;
-    window.set_modal(true);
-    window.set_default_size(200, 200);
-    return app->run(window);
+
+    Gtk::Window * window = nullptr;
+    auto builder = Gtk::Builder::create_from_file("res/gui.glade");
+    builder->get_widget("master_password_window", window);
+
+    Gtk::Entry * passwordEntry = nullptr;
+    builder->get_widget("password_entry", passwordEntry);
+    passwordEntry->set_events(Gdk::ALL_EVENTS_MASK);
+    passwordEntry->signal_activate().connect(sigc::mem_fun(*this, &App::onEnterKeyPressed));
+
+    return app->run(*window);
+  }
+
+  void App::onEnterKeyPressed() {
+    std::cout << "checking password" << std::endl;
   }
 };
