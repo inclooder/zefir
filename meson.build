@@ -26,7 +26,7 @@ sources = [
   'src/zefir/gui/app.cpp'
 ]
 
-boost = dependency('boost', modules : ['thread', 'system', 'log'])
+boost = dependency('boost', modules : ['thread', 'system', 'log', 'program_options'])
 sqlcipher = dependency('sqlcipher')
 gtkmm = dependency('gtkmm-3.0')
 readline = declare_dependency(link_args: '-lreadline')

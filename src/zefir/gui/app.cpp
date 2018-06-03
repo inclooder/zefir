@@ -6,7 +6,8 @@ namespace Zefir::Gui {
   }
 
   int App::run() {
-    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
+    int argcForGtk = 1;
+    auto app = Gtk::Application::create(argcForGtk, argv, "org.gtkmm.examples.base");
 
     Gtk::Window * window = nullptr;
     auto builder = Gtk::Builder::create_from_file("res/gui.glade");

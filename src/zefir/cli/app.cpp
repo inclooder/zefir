@@ -7,7 +7,7 @@
 #include <memory>
 
 namespace Zefir::Cli {
-  App::App() {
+  App::App(int argc, char **argv) {
   }
 
   i32 App::run() {

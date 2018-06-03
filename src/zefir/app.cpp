@@ -15,7 +15,12 @@ namespace Zefir {
 
   int App::run() {
     try {
-      return Gui::App(argc, argv).run();
+      parseArgs();
+      if(options.count("gui")) {
+        return Gui::App(argc, argv).run();
+      } else {
+        return Cli::App(argc, argv).run();
+      }
     } catch (std::exception& e) {
       std::cerr << e.what() << std::endl;
       std::exit(EXIT_FAILURE);
@@ -31,5 +36,14 @@ namespace Zefir {
     (
       logging::trivial::severity >= logging::trivial::info
     );
+  }
+
+  bool App::parseArgs() {
+    namespace po = boost::program_options;
+    po::options_description desc("Options");
+    desc.add_options()
+      ("gui,g", "Start in gui mode");
+
+    po::store(po::parse_command_line(argc, argv, desc), options);
   }
 };
