@@ -21,12 +21,10 @@ namespace Zefir::Gui {
   void App::onEnterKeyPressed() {
     std::string masterPassword = passwordEntry->get_text();
     if(!db->setPassword(masterPassword)) {
-      std::cout << "invalid password" << std::endl;
       Gtk::MessageDialog dialog(*passwordWindow, "Incorrect password.", false, Gtk::MessageType::MESSAGE_ERROR);
       dialog.run();
       passwordEntry->set_text("");
     } else {
-      std::cout << "valid password" << std::endl;
       Repo repo(db);
       auto secrets = repo.all();
       for(const auto & secret : secrets) {
@@ -45,15 +43,23 @@ namespace Zefir::Gui {
     builder->get_widget("password_entry", passwordEntry);
     builder->get_widget("accounts_window", accountsWindow);
     builder->get_widget("accounts_list", accountsList);
-    passwordEntry->set_events(Gdk::ALL_EVENTS_MASK);
     passwordEntry->signal_activate().connect(sigc::mem_fun(*this, &App::onEnterKeyPressed));
+    accountsList->signal_row_activated().connect(sigc::mem_fun(*this, &App::onPasswordChosen));
   }
 
   void App::onAppStartup() {
     db = std::make_shared<SqlCipher::Connection>("zefir.db");
     initializeWidgets();
-    accountsWindow->set_application(app);
-    passwordWindow->set_application(app);
+    app->add_window(*passwordWindow);
+    app->add_window(*accountsWindow);
     passwordWindow->show();
+  }
+
+  void App::onPasswordChosen(Gtk::ListBoxRow * selection) {
+    auto secret_name = ((Gtk::Label *)selection->get_child())->get_text();
+    auto clipboard = Gtk::Clipboard::get(GDK_SELECTION_PRIMARY);
+    clipboard->set_text(secret_name);
+    clipboard->store();
+    accountsWindow->hide();
   }
 };

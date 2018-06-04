@@ -15,6 +15,7 @@ namespace Zefir::Gui {
       void initializeWidgets();
       void onAppStartup();
       void onEnterKeyPressed();
+      void onPasswordChosen(Gtk::ListBoxRow * selection);
       int argc;
       char **argv;
       Glib::RefPtr<Gtk::Application> app;
