@@ -11,13 +11,17 @@ namespace Zefir::Gui {
       App(int argc, char **argv);
       ~App();
       int run();
-      void onEnterKeyPressed();
-      void initializeWidgets();
     private:
+      void initializeWidgets();
+      void onAppStartup();
+      void onEnterKeyPressed();
       int argc;
       char **argv;
+      Glib::RefPtr<Gtk::Application> app;
       Gtk::Window * passwordWindow;
       Gtk::Entry * passwordEntry;
+      Gtk::Window * accountsWindow;
+      Gtk::ListBox * accountsList;
       std::shared_ptr<SqlCipher::Connection> db;
   };
 };
