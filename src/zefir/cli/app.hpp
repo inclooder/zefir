@@ -14,7 +14,6 @@ namespace Zefir::Cli {
     public:
       App(int argc, char **argv);
       i32 run();
-      ~App();
     private:
       void initializeCommands();
       bool findAndExecuteCommand(const std::string & input);

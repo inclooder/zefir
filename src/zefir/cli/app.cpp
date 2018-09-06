@@ -59,9 +59,6 @@ namespace Zefir::Cli {
     return false;
   }
 
-  App::~App() {
-  }
-
   void App::listSecrets() {
     std::string delimiter = " - ";
     auto secrets = repo->all();
