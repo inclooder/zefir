@@ -9,7 +9,6 @@ namespace Zefir::Gui {
   class App {
     public:
       App(int argc, char **argv);
-      ~App();
       int run();
     private:
       void initializeWidgets();
@@ -19,14 +18,12 @@ namespace Zefir::Gui {
       int argc;
       char **argv;
       Glib::RefPtr<Gtk::Application> app;
-      Gtk::Window * passwordWindow;
+      std::unique_ptr<Gtk::Window> passwordWindow;
       Gtk::Entry * passwordEntry;
-      Gtk::Window * accountsWindow;
+      std::unique_ptr<Gtk::Window> accountsWindow;
       Gtk::ListBox * accountsList;
       std::shared_ptr<SqlCipher::Connection> db;
   };
 };
-
-
 
 #endif /* end of include guard: ZEFIR_GUI_APP_H */
