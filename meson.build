@@ -23,7 +23,8 @@ sources = [
   'src/zefir/cli/terminal.cpp',
   'src/zefir/cli/commands/show_password.cpp',
   'src/zefir/cli/commands/new_password.cpp',
-  'src/zefir/gui/app.cpp'
+  'src/zefir/gui/app.cpp',
+  'src/zefir/gui/master_password_window.cpp'
 ]
 
 boost = dependency('boost', modules : ['thread', 'system', 'log', 'program_options'])
