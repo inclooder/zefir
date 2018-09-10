@@ -12,8 +12,11 @@ namespace Zefir::Gui {
         std::shared_ptr<SqlCipher::Connection> db
       );
       virtual ~SecretsWindow();
+      void refreshList();
     private:
       Glib::RefPtr<Gtk::Builder> builder;
       std::shared_ptr<SqlCipher::Connection> db;
+      Gtk::SearchEntry* searchEntry;
+      Gtk::ListBox* secretsList;
   };
 };
