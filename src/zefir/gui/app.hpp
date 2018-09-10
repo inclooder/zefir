@@ -18,10 +18,11 @@ namespace Zefir::Gui {
       int argc;
       char **argv;
       Glib::RefPtr<Gtk::Application> app;
-      std::unique_ptr<Gtk::Window> passwordWindow;
-      Gtk::Entry * passwordEntry;
-      std::unique_ptr<Gtk::Window> accountsWindow;
-      Gtk::ListBox * accountsList;
+      Glib::RefPtr<Gtk::Builder> builder;
+      Gtk::Window* passwordWindow;
+      Gtk::Entry* passwordEntry;
+      Gtk::Window* accountsWindow;
+      Gtk::ListBox* accountsList;
       std::shared_ptr<SqlCipher::Connection> db;
   };
 };

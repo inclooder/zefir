@@ -33,13 +33,10 @@ namespace Zefir::Gui {
   }
 
   void App::initializeWidgets() {
-    auto builder = Gtk::Builder::create_from_file("res/gui.glade");
-    Gtk::Window * wndPtr = nullptr;
-    builder->get_widget("master_password_window", wndPtr);
-    passwordWindow = std::unique_ptr<Gtk::Window>(wndPtr);
+    builder = Gtk::Builder::create_from_file("res/gui.glade");
+    builder->get_widget("master_password_window", passwordWindow);
     builder->get_widget("password_entry", passwordEntry);
-    builder->get_widget("accounts_window", wndPtr);
-    accountsWindow = std::unique_ptr<Gtk::Window>(wndPtr);
+    builder->get_widget("accounts_window", accountsWindow);
     builder->get_widget("accounts_list", accountsList);
     passwordEntry->signal_activate().connect(sigc::mem_fun(*this, &App::onEnterKeyPressed));
     accountsList->signal_row_activated().connect(sigc::mem_fun(*this, &App::onPasswordChosen));
