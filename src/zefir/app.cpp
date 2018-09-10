@@ -17,9 +17,9 @@ namespace Zefir {
     try {
       parseArgs();
       if(options.count("gui")) {
-        return Gui::App(argc, argv).run();
+        return Gui::App(options).run();
       } else {
-        return Cli::App(argc, argv).run();
+        return Cli::App(options).run();
       }
     } catch (std::exception& e) {
       std::cerr << e.what() << std::endl;
@@ -42,7 +42,8 @@ namespace Zefir {
     namespace po = boost::program_options;
     po::options_description desc("Options");
     desc.add_options()
-      ("gui,g", "Start in gui mode");
+      ("gui,g", "Start in gui mode")
+      ("select,s", "Select password and copy to clipboard");
 
     po::store(po::parse_command_line(argc, argv, desc), options);
   }

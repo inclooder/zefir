@@ -7,7 +7,8 @@
 #include <memory>
 
 namespace Zefir::Cli {
-  App::App(int argc, char **argv) {
+
+  App::App(boost::program_options::variables_map options) {
   }
 
   i32 App::run() {

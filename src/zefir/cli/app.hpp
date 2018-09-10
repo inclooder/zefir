@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <boost/program_options.hpp>
 #include "zefir/repo.hpp"
 #include "framework/types.hpp"
 #include "zefir/cli/terminal.hpp"
@@ -11,7 +12,7 @@
 namespace Zefir::Cli {
   class App {
     public:
-      App(int argc, char **argv);
+      App(boost::program_options::variables_map options);
       i32 run();
     private:
       void initializeCommands();

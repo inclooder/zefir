@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace Zefir::Gui {
-  App::App(int argc, char **argv) : argc(argc), argv(argv) {
+  App::App(boost::program_options::variables_map options) : options(options) {
   }
 
   int App::run() {
