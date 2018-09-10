@@ -1,5 +1,4 @@
-#ifndef SQL_CIPHER_STATEMENT_H
-#define SQL_CIPHER_STATEMENT_H
+#pragma once
 
 #include "sql_cipher/sqlite.hpp"
 #include "sql_cipher/result.hpp"
@@ -21,6 +20,3 @@ namespace SqlCipher {
       sqlite3_stmt * statementHandle;
   };
 };
-
-
-#endif /* end of include guard: SQL_CIPHER_STATEMENT_H */

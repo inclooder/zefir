@@ -1,5 +1,4 @@
-#ifndef PASSWORDS_GENERATOR_H
-#define PASSWORDS_GENERATOR_H
+#pragma once
 
 #include <string>
 #include <unordered_set>
@@ -12,6 +11,3 @@ namespace Passwords {
       std::unordered_set<char> getAvailableCharacters() const;
   };
 };
-
-#endif /* end of include guard: PASSWORDS_GENERATOR_H */
-

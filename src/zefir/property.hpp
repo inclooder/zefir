@@ -1,5 +1,4 @@
-#ifndef PROPERTY_H
-#define PROPERTY_H
+#pragma once
 
 #include <string>
 #include "framework/types.hpp"
@@ -19,5 +18,3 @@ namespace Zefir {
       std::string value;
   };
 };
-
-#endif /* end of include guard: PROPERTY_H */

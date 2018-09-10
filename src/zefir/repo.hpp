@@ -1,5 +1,4 @@
-#ifndef SECRET_REPO_H
-#define SECRET_REPO_H
+#pragma once
 
 #include <vector>
 #include "zefir/secret.hpp"
@@ -20,5 +19,3 @@ namespace Zefir {
       std::shared_ptr<SqlCipher::Connection> db;
   };
 };
-
-#endif /* end of include guard: SECRET_REPO_H */

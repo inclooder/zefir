@@ -1,5 +1,4 @@
-#ifndef ZEFIR_GUI_APP_H
-#define ZEFIR_GUI_APP_H
+#pragma once
 
 #include <gtkmm.h>
 #include <memory>
@@ -26,5 +25,3 @@ namespace Zefir::Gui {
       std::shared_ptr<SqlCipher::Connection> db;
   };
 };
-
-#endif /* end of include guard: ZEFIR_GUI_APP_H */

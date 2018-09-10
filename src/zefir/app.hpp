@@ -1,5 +1,4 @@
-#ifndef ZEFIR_APP_H
-#define ZEFIR_APP_H
+#pragma once
 
 #include <boost/program_options.hpp>
 
@@ -16,5 +15,3 @@ namespace Zefir {
       boost::program_options::variables_map options;
   };
 };
-
-#endif /* end of include guard: ZEFIR_APP_H */

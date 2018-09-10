@@ -1,5 +1,4 @@
-#ifndef SQL_CIPHER_ERROR_H
-#define SQL_CIPHER_ERROR_H
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -13,7 +12,3 @@ namespace SqlCipher {
       std::string fullMessage;
   };
 };
-
-#endif /* end of include guard: ERROR_H */
-
-

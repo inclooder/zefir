@@ -1,5 +1,4 @@
-#ifndef ZEFIR_CLI_SHOW_PASSWORD_H
-#define ZEFIR_CLI_SHOW_PASSWORD_H
+#pragma once
 
 #include <string>
 #include "zefir/cli/command.hpp"
@@ -15,5 +14,3 @@ namespace Zefir::Cli::Commands {
       Repo * repo;
   };
 };
-
-#endif /* end of include guard: ZEFIR_CLI_SHOW_PASSWORD_H */

@@ -1,5 +1,4 @@
-#ifndef SQL_CIPHER_CONNECTION_H
-#define SQL_CIPHER_CONNECTION_H
+#pragma once
 
 #include <string>
 #include "sql_cipher/sqlite.hpp"
@@ -21,7 +20,3 @@ namespace SqlCipher {
       sqlite3 * dbHandle;
   };
 };
-
-
-
-#endif /* end of include guard: SQL_CIPHER_H */

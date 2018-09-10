@@ -1,5 +1,4 @@
-#ifndef ZEFIR_CLI_NEW_PASSWORD_H
-#define ZEFIR_CLI_NEW_PASSWORD_H
+#pragma once
 
 #include "zefir/cli/command.hpp"
 #include "zefir/repo.hpp"
@@ -16,5 +15,3 @@ namespace Zefir::Cli::Commands {
       Terminal * terminal;
   };
 };
-
-#endif /* end of include guard: ZEFIR_CLI_NEW_PASSWORD_H */

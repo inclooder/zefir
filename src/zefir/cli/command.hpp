@@ -1,5 +1,4 @@
-#ifndef ZEFIR_CLI_COMMAND_H
-#define ZEFIR_CLI_COMMAND_H
+#pragma once
 
 #include <string>
 #include "framework/types.hpp"
@@ -15,5 +14,3 @@ namespace Zefir::Cli {
       std::string input;
   };
 };
-
-#endif /* end of include guard: ZEFIR_CLI_COMMAND_H */

@@ -1,5 +1,4 @@
-#ifndef SECRET_H
-#define SECRET_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -27,5 +26,3 @@ namespace Zefir {
       std::vector<Property> properties;
   };
 };
-
-#endif /* end of include guard: SECRET_H */

@@ -1,5 +1,4 @@
-#ifndef APP_H
-#define APP_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -25,5 +24,3 @@ namespace Zefir::Cli {
       std::vector<std::shared_ptr<Zefir::Cli::Command>> commands;
   };
 };
-
-#endif /* end of include guard: APP_H */

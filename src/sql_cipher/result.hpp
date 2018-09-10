@@ -1,5 +1,4 @@
-#ifndef SQL_CIPHER_RESULT_H
-#define SQL_CIPHER_RESULT_H
+#pragma once
 
 #include <map>
 #include <vector>
@@ -23,7 +22,3 @@ namespace SqlCipher {
       std::vector<Row> rows;
   };
 };
-
-
-
-#endif /* end of include guard: SQ */

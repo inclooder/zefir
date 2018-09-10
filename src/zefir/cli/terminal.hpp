@@ -1,5 +1,4 @@
-#ifndef ZEFIR_CLI_TERMINAL_H
-#define ZEFIR_CLI_TERMINAL_H
+#pragma once
 
 #include <string>
 
@@ -15,5 +14,3 @@ namespace Zefir::Cli {
       bool yesNoQuestion(const std::string & question);
   };
 };
-
-#endif /* end of include guard: ZEFIR_CLI_TERMINAL_H */
