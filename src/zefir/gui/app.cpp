@@ -25,27 +25,41 @@ namespace Zefir::Gui {
     masterPasswordWindow->hide();
   }
 
+  void App::showSecretsList() {
+    secretsWindow->show();
+    masterPasswordWindow->hide();
+  }
+
   void App::initializeWidgets() {
     auto builder = Gtk::Builder::create_from_file("res/gui.glade");
 
     MasterPasswordWindow * mpw;
     builder->get_widget_derived("master_password_window", mpw, db);
     masterPasswordWindow = std::unique_ptr<MasterPasswordWindow>(mpw);
+    if(options.count("select")) {
+      masterPasswordWindow->onPasswordAccepted().connect(sigc::mem_fun(*this, &App::showAccountsList));
+    } else {
+      //Normal window
+      masterPasswordWindow->onPasswordAccepted().connect(sigc::mem_fun(*this, &App::showSecretsList));
+    }
+    app->add_window(*masterPasswordWindow);
+
+    SecretsWindow * sww;
+    builder->get_widget_derived("secrets_window", sww, db);
+    secretsWindow = std::unique_ptr<SecretsWindow>(sww);
+    app->add_window(*secretsWindow);
 
     Gtk::Window * wnd = nullptr;
     builder->get_widget("accounts_window", wnd);
     accountsWindow = std::unique_ptr<Gtk::Window>(wnd);
     builder->get_widget("accounts_list", accountsList);
     accountsList->signal_row_activated().connect(sigc::mem_fun(*this, &App::onPasswordChosen));
-
-    masterPasswordWindow->onPasswordAccepted().connect(sigc::mem_fun(*this, &App::showAccountsList));
+    app->add_window(*accountsWindow);
   }
 
   void App::onAppStartup() {
     db = std::make_shared<SqlCipher::Connection>("zefir.db");
     initializeWidgets();
-    app->add_window(*masterPasswordWindow);
-    app->add_window(*accountsWindow);
     masterPasswordWindow->show();
   }
 
