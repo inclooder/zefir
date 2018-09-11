@@ -17,7 +17,7 @@ namespace Zefir::Gui {
     builder->get_widget("secrets_list", secretsList);
 
     this->signal_show().
-      connect(sigc::mem_fun(*this, &SecretsWindow::refreshList));
+      connect(sigc::mem_fun(*this, &SecretsWindow::startup));
 
     secretsList->signal_row_activated().connect(sigc::mem_fun(*this, &SecretsWindow::selectSecret));
     builder->get_widget("edit_secret_name", secretName);
@@ -27,6 +27,13 @@ namespace Zefir::Gui {
   }
 
   SecretsWindow::~SecretsWindow() {
+  }
+
+  void SecretsWindow::startup() {
+    refreshList();
+    auto firstSecret = secretsList->get_row_at_index(0);
+    secretsList->select_row(*firstSecret);
+    selectSecret(firstSecret);
   }
 
   void SecretsWindow::refreshList() {

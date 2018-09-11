@@ -13,6 +13,7 @@ namespace Zefir::Gui {
       );
       virtual ~SecretsWindow();
       void refreshList();
+      void startup();
       void updatePassword();
       void selectSecret(Gtk::ListBoxRow * selection);
     private:
