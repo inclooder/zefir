@@ -18,6 +18,10 @@ namespace Zefir::Gui {
 
     this->signal_show().
       connect(sigc::mem_fun(*this, &SecretsWindow::refreshList));
+
+    secretsList->signal_row_activated().connect(sigc::mem_fun(*this, &SecretsWindow::selectSecret));
+    builder->get_widget("edit_secret_name", secretName);
+    builder->get_widget("edit_password_entry", editPasswordEntry);
   }
 
   SecretsWindow::~SecretsWindow() {
@@ -35,6 +39,18 @@ namespace Zefir::Gui {
       auto lbl = Gtk::manage(new Gtk::Label(secret.getName()));
       lbl->show();
       secretsList->append(*lbl);
+    }
+  }
+
+  void SecretsWindow::selectSecret(Gtk::ListBoxRow * selection) {
+    auto secret_name = ((Gtk::Label *)selection->get_child())->get_text();
+    secretName->set_text(secret_name);
+
+    Repo repo(db);
+    auto secrets = repo.findByName(secret_name);
+    if(secrets.size() > 0) {
+      auto secret = secrets[0];
+      editPasswordEntry->set_text(secret.getPassword());
     }
   }
 };

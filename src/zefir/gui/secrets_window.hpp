@@ -13,10 +13,13 @@ namespace Zefir::Gui {
       );
       virtual ~SecretsWindow();
       void refreshList();
+      void selectSecret(Gtk::ListBoxRow * selection);
     private:
       Glib::RefPtr<Gtk::Builder> builder;
       std::shared_ptr<SqlCipher::Connection> db;
       Gtk::SearchEntry* searchEntry;
       Gtk::ListBox* secretsList;
+      Gtk::Label* secretName;
+      Gtk::Entry* editPasswordEntry;
   };
 };
