@@ -32,10 +32,10 @@ namespace Zefir {
   void App::configureLogger() {
     namespace logging = boost::log;
 
-    logging::core::get()->set_filter
-    (
-      logging::trivial::severity >= logging::trivial::info
-    );
+    /* logging::core::get()->set_filter */
+    /* ( */
+    /*   logging::trivial::severity >= logging::trivial::info */
+    /* ); */
   }
 
   bool App::parseArgs() {

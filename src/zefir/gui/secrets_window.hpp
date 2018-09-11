@@ -13,6 +13,7 @@ namespace Zefir::Gui {
       );
       virtual ~SecretsWindow();
       void refreshList();
+      void updatePassword();
       void selectSecret(Gtk::ListBoxRow * selection);
     private:
       Glib::RefPtr<Gtk::Builder> builder;
@@ -21,5 +22,6 @@ namespace Zefir::Gui {
       Gtk::ListBox* secretsList;
       Gtk::Label* secretName;
       Gtk::Entry* editPasswordEntry;
+      Gtk::Button* updatePasswordBtn;
   };
 };

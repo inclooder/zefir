@@ -18,6 +18,11 @@ namespace SqlCipher {
     sqlite3_bind_text(statementHandle, position, value.c_str(), value.size(), SQLITE_TRANSIENT);
   }
   Result Statement::execute() {
+    //debug
+    auto sql = sqlite3_expanded_sql(statementHandle);
+    BOOST_LOG(logger) << "SQL: " << sql;
+    //debug
+
     Result result;
     for(;;) {
       Result::Row row;

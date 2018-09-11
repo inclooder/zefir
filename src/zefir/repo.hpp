@@ -10,6 +10,7 @@ namespace Zefir {
     public:
       Repo(std::shared_ptr<SqlCipher::Connection> db);
       bool save(Secret & secret);
+      bool update(Secret & secret);
       bool save(std::vector<Secret> & secret);
       std::vector<Secret> all();
       bool findById(Secret & secret) const;
