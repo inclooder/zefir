@@ -17,6 +17,11 @@ namespace SqlCipher {
   void Statement::setText(u8 position, const std::string & value) {
     sqlite3_bind_text(statementHandle, position, value.c_str(), value.size(), SQLITE_TRANSIENT);
   }
+
+  std::string Statement::toSql() {
+    auto sql = sqlite3_expanded_sql(statementHandle);
+    return std::string(sql);
+  }
   Result Statement::execute() {
     //debug
     auto sql = sqlite3_expanded_sql(statementHandle);

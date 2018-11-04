@@ -4,6 +4,7 @@
 #include "sql_cipher/result.hpp"
 #include "framework/types.hpp"
 #include "framework/logger.hpp"
+#include <string>
 
 namespace SqlCipher {
   class Connection;
@@ -13,6 +14,7 @@ namespace SqlCipher {
       void setDouble(u8 position, double value);
       void setInt(u8 position, i32 value);
       void setText(u8 position, const std::string & value);
+      std::string toSql();
       Result execute();
       ~Statement();
     private:
