@@ -1,6 +1,7 @@
 #include "zefir/secure_encryptor.hpp"
 #include <cryptopp/modes.h>
 #include <cryptopp/base64.h>
+#include <cryptopp/pwdbased.h>
 #include <iostream>
 #include <iomanip>
 
@@ -8,9 +9,19 @@ using namespace CryptoPP;
 
 namespace Zefir {
   SecureEncryptor::SecureEncryptor(const std::string & password) : key(0x00, AES::DEFAULT_KEYLENGTH), iv(AES::BLOCKSIZE) {
-    AutoSeededRandomPool rnd;
-    rnd.GenerateBlock(key, key.size());
-    rnd.GenerateBlock(iv, iv.size());
+    auto derivedSize = AES::DEFAULT_KEYLENGTH + AES::BLOCKSIZE;
+    auto derived = std::make_unique<byte[]>(derivedSize);
+
+    PKCS12_PBKDF<SHA256> pbkdf;
+
+    pbkdf.DeriveKey(
+      derived.get(),
+      derivedSize,
+      reinterpret_cast<const byte *>(password.c_str()),
+      password.size()
+    );
+    memcpy(key, derived.get(), key.size());
+    memcpy(iv, derived.get() + key.size(), iv.size());
   }
 
   std::string SecureEncryptor::encrypt(const std::string & payload) {

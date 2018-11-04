@@ -19,6 +19,7 @@ sources = [
   'src/zefir/repo.cpp',
   'src/zefir/commands_log.cpp',
   'src/zefir/secret.cpp',
+  'src/zefir/secure_encryptor.cpp',
   'src/zefir/cli/app.cpp',
   'src/zefir/cli/command.cpp',
   'src/zefir/cli/terminal.cpp',
