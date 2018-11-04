@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include "zefir/secure_encryptor.hpp"
 
 namespace Zefir {
   class CommandsLog {
@@ -13,5 +14,6 @@ namespace Zefir {
     private:
       std::filesystem::path logsPath;
       std::vector<std::filesystem::path> getLogFiles() const;
+      std::unique_ptr<SecureEncryptor> encryptor;
   };
 }

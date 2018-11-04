@@ -8,6 +8,7 @@
 
 namespace Zefir {
   CommandsLog::CommandsLog(const std::filesystem::path & logsPath) : logsPath(logsPath) {
+    encryptor = std::make_unique<SecureEncryptor>("master password");
   }
   void CommandsLog::addCommand(const std::string & command) {
     std::time_t now = std::time(nullptr);
@@ -15,7 +16,7 @@ namespace Zefir {
     fileName << now;
     auto filePath = logsPath / fileName.str();
     std::ofstream log(filePath);
-    log << command;
+    log << encryptor->encrypt(command);
   }
   std::vector<std::string> CommandsLog::getCommands() const {
     std::vector<std::string> commands;
@@ -23,7 +24,8 @@ namespace Zefir {
       std::ifstream log(path);
       std::string line;
       while(std::getline(log, line)) {
-        commands.push_back(line);
+        std::string decryptedLine = encryptor->decrypt(line);
+        commands.push_back(decryptedLine);
       }
     }
     return commands;

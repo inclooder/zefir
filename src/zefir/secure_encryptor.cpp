@@ -29,11 +29,14 @@ namespace Zefir {
     encryptor.SetKeyWithIV(key, sizeof(key), iv);
 
     std::string encrypted;
+    Base64Encoder base64Encoder;
+    AlgorithmParameters params = MakeParameters(Name::Pad(), false)(Name::InsertLineBreaks(), false);
+    base64Encoder.IsolatedInitialize(params);
+    base64Encoder.Attach(new StringSink(encrypted));
+
     StringSource(payload, true,
       new StreamTransformationFilter(encryptor,
-        new Base64Encoder(
-          new StringSink(encrypted)
-        )
+        new Redirector(base64Encoder)
       )
     );
     return encrypted;
