@@ -3,6 +3,7 @@
 #include <vector>
 #include "zefir/secret.hpp"
 #include "sql_cipher/connection.hpp"
+#include "zefir/commands_log.hpp"
 #include <memory>
 
 namespace Zefir {
@@ -19,5 +20,6 @@ namespace Zefir {
     private:
       void initDatabase();
       std::shared_ptr<SqlCipher::Connection> db;
+      std::unique_ptr<CommandsLog> commandsLog;
   };
 };

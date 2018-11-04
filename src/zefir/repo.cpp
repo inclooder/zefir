@@ -5,6 +5,7 @@
 namespace Zefir {
   Repo::Repo(std::shared_ptr<SqlCipher::Connection> db) {
     this->db = db;
+    commandsLog = std::make_unique<CommandsLog>("/tmp/abc");
     initDatabase();
   }
 
@@ -14,6 +15,7 @@ namespace Zefir {
     st.setText(2, secret.getDescription());
     st.setText(3, secret.getPassword());
     st.execute();
+    commandsLog->addCommand(st.toSql());
     return true;
   }
 
@@ -24,6 +26,7 @@ namespace Zefir {
     st.setText(3, secret.getPassword());
     st.setInt(4, secret.getId());
     st.execute();
+    commandsLog->addCommand(st.toSql());
     return true;
   }
 
@@ -53,6 +56,8 @@ namespace Zefir {
   }
 
   void Repo::initDatabase() {
+    db->execute("DROP TABLE IF EXISTS secrets");
+    db->execute("DROP TABLE IF EXISTS properties");
     db->execute(
       "CREATE TABLE IF NOT EXISTS secrets"
       "(id integer PRIMARY KEY, name text, description text, password text);"
