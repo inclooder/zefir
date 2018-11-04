@@ -17,6 +17,7 @@ sources = [
   'src/zefir/app.cpp',
   'src/zefir/property.cpp',
   'src/zefir/repo.cpp',
+  'src/zefir/commands_log.cpp',
   'src/zefir/secret.cpp',
   'src/zefir/cli/app.cpp',
   'src/zefir/cli/command.cpp',
@@ -27,6 +28,8 @@ sources = [
   'src/zefir/gui/master_password_window.cpp',
   'src/zefir/gui/secrets_window.cpp'
 ]
+
+add_project_link_arguments(['-lstdc++fs'], language : 'cpp')
 
 boost = dependency('boost', modules : ['thread', 'system', 'log', 'program_options'])
 sqlcipher = dependency('sqlcipher')
