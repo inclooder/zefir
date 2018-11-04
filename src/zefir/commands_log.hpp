@@ -12,5 +12,6 @@ namespace Zefir {
       std::vector<std::string> getCommands() const;
     private:
       std::filesystem::path logsPath;
+      std::vector<std::filesystem::path> getLogFiles() const;
   };
 }
