@@ -66,6 +66,9 @@ namespace Zefir {
       "CREATE TABLE IF NOT EXISTS properties"
       "(id integer PRIMARY KEY, secret_id integer, name text, value text);"
     );
+    for(const auto & command : commandsLog->getCommands()) {
+      db->execute(command);
+    }
   }
 
   std::vector<Secret> Repo::searchByName(const std::string & name) {
